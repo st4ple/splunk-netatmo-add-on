@@ -1,7 +1,54 @@
 # :thermometer::electric_plug: Netatmo Add-on for Splunk
-Documentation under construction :construction:
+> **WARNING**: This Splunk TA is still under construction. Future updates might break existing setups so proceed with care! 
 
-Example event:
+## Installation
+### Via GIT:
+Clone this repository to $SPLUNK_HOME/etc/apps/ on an Indexer or Heavy Forwarder and restart Splunk.
+
+````
+$ git clone https://github.com/st4ple/splunk-netatmo-add-on.git
+$ splunk restart
+````
+
+#### Via Splunk UI:
+
+Download the [ZIP directory of this repository](https://github.com/st4ple/splunk-netatmo-add-on/archive/master.zip) and upload it to your Splunk instance via `Apps->Manage Apps->Install App from File`.
+
+
+## Configuration 
+
+Prerequisites: Client API id & secret for an App from the [Netatmo Connect Developer Portal](https://dev.netatmo.com/) with the following scopes enabled:
+
+* read_station
+* read_thermostat
+
+Add the API key and secret to a (new) file named app_config.py in the apps `bin/` directory (`$SPLUNK_HOME/etc/apps/splunk-netatmo-add-on/bin/app_config.py` like this (take note of the parenthesis!):
+
+```
+client_id = "<client_id>"
+client_secret = "<client_secret>"
+````
+
+#### Via Splunk UI:
+
+Navigate to `Settings->Data inputs->Local Inputs->Netatmo->New` and fill out the required parameters.
+
+#### Via .conf files:
+
+Add a stanza like this to an inputs.conf file (replace parts in <> brackets):
+
+```YAML
+[netatmo://<unique stanza title>]
+host = Netatmo
+index = <index>
+interval = 300               
+password = <netatmo_account_password>
+sourcetype = _json
+username = <netatmo_account_username>
+```
+
+
+## Example event:
 ```json
 {
   "_id": "xx:xx:xx:xx:xx:xx", 
