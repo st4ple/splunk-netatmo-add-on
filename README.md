@@ -1,8 +1,8 @@
-# :thermometer::electric_plug: Netatmo Add-on for Splunk
-> **WARNING**: This Splunk TA is still under construction. Future updates might break existing setups so proceed with care! 
+# :thermometer::electric_plug: Netatmo TA for Splunk
+> **WARNING**: This TA is still under construction. Future updates might break existing setups so proceed with care! 
 
 ## Installation
-### Via GIT:
+#### via GIT:
 Clone this repository to $SPLUNK_HOME/etc/apps/ on an Indexer or Heavy Forwarder and restart Splunk.
 
 ````
@@ -10,9 +10,11 @@ $ git clone https://github.com/st4ple/splunk-netatmo-add-on.git
 $ splunk restart
 ````
 
-#### Via Splunk UI:
+#### via Splunk UI:
 
-Download the [ZIP directory of this repository](https://github.com/st4ple/splunk-netatmo-add-on/archive/master.zip) and upload it to your Splunk instance via `Apps->Manage Apps->Install App from File`.
+Download the [.zip directory of this repository](https://github.com/st4ple/splunk-netatmo-add-on/archive/master.zip) and upload it to your Splunk instance via 
+
+`Apps -> Manage Apps -> Install App from File`.
 
 
 ## Configuration 
@@ -22,18 +24,22 @@ Prerequisites: Client API id & secret for an App from the [Netatmo Connect Devel
 * read_station
 * read_thermostat
 
-Add the API key and secret to a (new) file named app_config.py in the apps `bin/` directory (`$SPLUNK_HOME/etc/apps/splunk-netatmo-add-on/bin/app_config.py` like this (take note of the parenthesis!):
+Add the API key and secret to a (new) file named app_config.py in the apps `bin/` directory (`$SPLUNK_HOME/etc/apps/splunk-netatmo-add-on/bin/app_config.py`) like this:
 
 ```
 client_id = "<client_id>"
 client_secret = "<client_secret>"
 ````
+Note: Make sure to include \" before and after the `client_id` and `client_secret` to comply to Python's syntax.
+#### via Splunk UI:
 
-#### Via Splunk UI:
+Navigate to 
 
-Navigate to `Settings->Data inputs->Local Inputs->Netatmo->New` and fill out the required parameters.
+`Settings -> Data inputs -> Local Inputs -> Netatmo -> New` 
 
-#### Via .conf files:
+and fill out the required parameters.
+
+#### via .conf files:
 
 Add a stanza like this to an inputs.conf file (replace parts in <> brackets):
 
@@ -46,8 +52,8 @@ password = <netatmo_account_password>
 sourcetype = _json
 username = <netatmo_account_username>
 ```
-
-
+Note: It makes no sense to set a smaller interval than 300\[s\] as the refresh-rate of the station data seems to be exactly 5 mins. 
+ 
 ## Example event:
 ```json
 {
